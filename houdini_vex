@@ -1,0 +1,61 @@
+///get transform matrix from 2 points
+
+vector P1 = point(0, "P", 0);
+vector P2 = point(0, "P", 1);
+vector upVector = set (0,1,0);
+
+vector xAxis = normalize(P2- P1);
+vector zAxis = normalize(cross(xAxis, upVector));
+vector yAxis = normalize(cross(zAxis, xAxis));
+
+vector center = P1 + (P2 - P1)/2;
+
+matrix myTransform = set(xAxis, yAxis, zAxis, center);
+
+setcomp(myTransform, 0, 0, 3);
+setcomp(myTransform, 0, 1, 3);
+setcomp(myTransform, 0, 2, 3);
+
+4@myTransform = myTransform;
+
+---------------------------------------------------------------------
+
+///mutliple matrix with geo
+
+matrix myTransform = point(1, "myTransform", 0);
+
+v@P *= invert(myTransform);
+
+v@N *= matrix3(invert(myTransform));
+v@v *= matrix3(invert(myTransform));
+
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+///could also be done on one whole axis to get full transform on non deformed animated geo
+
+
+vector P1 = point(0, "P", 0);
+vector P2 = point(1, "P", 0);
+vector P3 = point(2, "P", 0);
+
+vector upVector = set (0,1,0);
+
+vector xAxis = normalize(P2- P1);
+vector zAxis = normalize(P1 - P3);
+vector yAxis = normalize(cross(zAxis, xAxis));
+
+v@xAxis = normalize(P2- P1);
+v@zAxis = normalize(P1 - P3);
+v@yAxis = normalize(cross(zAxis, xAxis));
+
+vector center = P1 + (P2 - P1)/2;
+
+matrix myTransform = set(xAxis, yAxis, zAxis, center);
+
+setcomp(myTransform, 0, 0, 3);
+setcomp(myTransform, 0, 1, 3);
+setcomp(myTransform, 0, 2, 3);
+
+4@myTransform = myTransform;
