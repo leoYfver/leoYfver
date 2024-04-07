@@ -1,1 +1,1 @@
-- snippets I want to access fast
+place to collect code snippets
